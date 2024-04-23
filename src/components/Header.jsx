@@ -2,6 +2,7 @@ import { useLocation, useNavigate } from "react-router";
 const Header = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  console.log(location.pathname);
   const pathMatchRoute = (route) => {
     if (route === location.pathname) return true;
   };
@@ -20,28 +21,32 @@ const Header = () => {
         <div>
           <ul className="flex space-x-10 ">
             <li
-              className={`cursor-pointer py-3 text-sm font-semibold text-gray-400 border-b-[3px] border-b-transparent ${
-                pathMatchRoute("/") && "text-black border-b-red-500"
+              className={`cursor-pointer py-3 text-sm font-semibold text-gray-400 border-b-[3px] border-transparent ${
+                pathMatchRoute("/") ? "text-gray-950 border-b-red-500" : ""
               }`}
               onClick={() => navigate("/")}
             >
               Home
             </li>
             <li
-              className={`cursor-pointer py-3 text-sm font-semibold text-gray-400 border-b-[3px] border-b-transparent ${
-                pathMatchRoute("/sign-in") && "text-black border-b-red-500"
-              }`}
-              onClick={() => navigate("/sign-in")}
-            >
-              Sign In
-            </li>
-            <li
-              className={`cursor-pointer py-3 text-sm font-semibold text-gray-400 border-b-[3px] border-b-transparent ${
-                pathMatchRoute("/offers") && "text-black border-b-red-500"
+              className={`cursor-pointer py-3 text-sm font-semibold text-gray-400 border-b-[3px] border-transparent ${
+                pathMatchRoute("/offers")
+                  ? "text-gray-950 border-b-red-500"
+                  : ""
               }`}
               onClick={() => navigate("/offers")}
             >
               Offers
+            </li>
+            <li
+              className={`cursor-pointer py-3 text-sm font-semibold text-gray-400 border-b-[3px] border-transparent ${
+                pathMatchRoute("/sign-in")
+                  ? "text-gray-950 border-b-red-500"
+                  : ""
+              }`}
+              onClick={() => navigate("/sign-in")}
+            >
+              Sign In
             </li>
           </ul>
         </div>
