@@ -2,7 +2,7 @@ import { useLocation, useNavigate } from "react-router";
 const Header = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  console.log(location.pathname);
+
   const pathMatchRoute = (route) => {
     if (route === location.pathname) return true;
   };
