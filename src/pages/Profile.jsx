@@ -1,8 +1,12 @@
-import { getAuth } from "firebase/auth";
+import { getAuth, updateProfile } from "firebase/auth";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { db } from "../firebase";
+import { doc, updateDoc } from "firebase/firestore";
 
 const Profile = () => {
+  const [changeDetail, setChangeDetail] = useState(false);
   const navigate = useNavigate();
   const auth = getAuth();
   const [formData, setFormData] = useState({
@@ -24,18 +28,40 @@ const Profile = () => {
     navigate("/");
   };
 
+  const onSubmit = async () => {
+    try {
+      if (auth.currentUser.displayName !== name) {
+        // updat the firebse auth
+        await updateProfile(auth.currentUser, {
+          displayName: name,
+        });
+        // update the firestore db
+        const docRef = doc(db, "users", auth.currentUser.uid);
+        await updateDoc(docRef, {
+          name,
+        });
+        toast.success("Profile Updated. ");
+      }
+    } catch (error) {
+      toast.error("Could not update the profile.");
+    }
+  };
+
   return (
     <section className="flex justify-center items-center flex-col max-w-6xl mx-auto">
       <h1 className="text-3xl text-center mt-6 font-bold">Profile</h1>
       <div className="w-full md:w-[50%] mt-6 px-3">
         <form>
           <input
-            disabled
+            disabled={!changeDetail}
+            onchange={onchange}
             type="name"
             id="name"
             value={name}
             onChange={onchange}
-            className="mb-6 w-full px-4 py-2 text-xl text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"
+            className={`mb-6 w-full px-4 py-2 text-xl text-gray-700 bg-white border-gray-300 rounded transition ease-in-out ${
+              changeDetail && "bg-red-200 focus:bg-red-200"
+            }`}
           />
           <input
             disabled
@@ -49,8 +75,14 @@ const Profile = () => {
           <div className="flex justify-between whitespace-nowrap text-sm sm:text-lg mb-6">
             <p className="flex items-center">
               Don't you want to change your name?{" "}
-              <span className="text-red-600 hover:text-red-800 transition duration-200 ml-1 cursor-pointer ease-in-out ">
-                Edit
+              <span
+                onClick={() => {
+                  changeDetail && onSubmit();
+                  setChangeDetail(!changeDetail);
+                }}
+                className="text-red-600 hover:text-red-800 transition duration-200 ml-1 cursor-pointer ease-in-out "
+              >
+                {changeDetail ? "Apply Change" : "Edit"}
               </span>
             </p>
             <p
