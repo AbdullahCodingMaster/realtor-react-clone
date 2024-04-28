@@ -1,9 +1,10 @@
 import { getAuth, updateProfile } from "firebase/auth";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { db } from "../firebase";
 import { doc, updateDoc } from "firebase/firestore";
+import { FcHome } from "react-icons/fc";
 
 const Profile = () => {
   const [changeDetail, setChangeDetail] = useState(false);
@@ -93,6 +94,19 @@ const Profile = () => {
             </p>
           </div>
         </form>
+        <button
+          typeof="button"
+          className="flex items-center justify-center w-full bg-blue-600 text-white mb-6 px-7 py-3 text-sm font-medium rounded uppercase shadow-md hover:bg-blue-700 transition duration-200 ease-in-out active:bg-blue-800 hover:shadow-lg"
+          type="submit"
+        >
+          <Link
+            to="/create-listing"
+            className="flex items-center justify-center"
+          >
+            <FcHome className="text-2xl bg-white rounded-full mr-2" />
+            sell and rent your home
+          </Link>
+        </button>
       </div>
     </section>
   );
