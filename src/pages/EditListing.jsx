@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Spinner from "./components/Spinner";
+import Spinner from "../components/Spinner";
 import { toast } from "react-toastify";
 import {
   getStorage,
@@ -10,7 +10,7 @@ import {
 import { getAuth } from "firebase/auth";
 import { v4 as uuidv4 } from "uuid";
 import { doc, getDoc, serverTimestamp, updateDoc } from "firebase/firestore";
-import { db } from "./firebase";
+import { db } from "../firebase";
 import { useNavigate, useParams } from "react-router-dom";
 const apiKey = process.env.REACT_APP_GEOCODE_API_KEY;
 export default function EditListing() {
