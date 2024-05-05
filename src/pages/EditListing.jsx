@@ -16,7 +16,7 @@ const apiKey = process.env.REACT_APP_GEOCODE_API_KEY;
 export default function EditListing() {
   const navigate = useNavigate();
   const auth = getAuth();
-  const [geoLocationEnabled, setGeoLocationEnabled] = useState(true);
+  const [geoLocationEnabled] = useState(true);
   const [loading, setLoading] = useState(false);
   const [listing, setListing] = useState(null);
   const [formData, setFormData] = useState({
@@ -170,6 +170,8 @@ export default function EditListing() {
               case "running":
                 console.log("Upload is running");
                 break;
+              default:
+                console.log("Success");
             }
           },
           (error) => {
